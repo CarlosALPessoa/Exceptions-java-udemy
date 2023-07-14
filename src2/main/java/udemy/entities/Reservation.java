@@ -3,7 +3,6 @@ package udemy.entities;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
-import udemy.exceptions.DomainException;
 
 public class Reservation {
     public Integer roomNumber;
@@ -15,13 +14,7 @@ public class Reservation {
     
     public Reservation(){}
     
-    //Com RuntimeException não precisarei propagar
-    //throws DomainException
     public Reservation (Integer roomNumber, Date checkIn, Date checkOut){
-        if(!checkOut.after(checkIn)){
-            throw  new DomainException("Check-out date must be after Check-in date");
-        }
-        
         this.roomNumber = roomNumber;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
@@ -49,19 +42,19 @@ public class Reservation {
         return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS); 
     }
     
-    //propagando a excessão 
-    public void  updateDates(Date checkIn, Date checkOut) throws DomainException{
+    public String updateDates(Date checkIn, Date checkOut){
         Date now = new Date();
         
         if(checkIn.before(now) || checkOut.before(now)){
-            throw new DomainException("Reservation dates for update must be future dates");
+            return "Reservation dates for update must be future dates";
         }
         if(!checkOut.after(checkIn)){
-            throw  new DomainException("Check-out date must be after Check-in date");
+            return  "Check-out date must be after Check-in date";
         }
         
         this.checkIn = checkIn;
         this.checkOut = checkOut;
+        return null;
     }
     
     @Override
