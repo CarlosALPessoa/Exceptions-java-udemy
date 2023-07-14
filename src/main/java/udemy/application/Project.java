@@ -36,7 +36,7 @@ public class Project {
                 reserva.updateDates(checkIn, checkOut);
             }
             
-            System.out.println("Reservation: "+ reserva);
+            System.out.println("Reservation:: "+ reserva);
         }
         
     }
